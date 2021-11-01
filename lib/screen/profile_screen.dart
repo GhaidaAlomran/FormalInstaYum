@@ -139,7 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
   //     );
 
   Widget buildImage() {
-    final image = NetworkImage(imageURL);
+    final image = imageURL == "noImage"
+        ? AssetImage("assets/images/defaultUser.png") // NEW
+        : NetworkImage(imageURL);
 
     return ClipOval(
       child: Material(

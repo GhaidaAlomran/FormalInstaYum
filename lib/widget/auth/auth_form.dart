@@ -20,6 +20,7 @@ class AuthForm extends StatefulWidget {
     String password,
     File image,
     bool isSignUp,
+    bool isDefaultImage, // NEW
     BuildContext ctx,
   ) submitFn;
   final bool isLoeading;
@@ -32,6 +33,7 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isSignUp = true;
+  bool _isDefaultImage = false; // NEW
 
   var _userEmail = "";
   var _userName = "";
@@ -65,13 +67,15 @@ class _AuthFormState extends State<AuthForm> {
       FocusScope.of(context).unfocus();
 
       if (_userImageFile == null && _isSignUp) {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Please pick an image"),
-            backgroundColor: Theme.of(context).errorColor,
-          ),
-        );
-        return;
+        _isDefaultImage =
+            true; //  if user did not choose an image then the defalut image should appear ==NEW
+        //   Scaffold.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text("Please pick an image"),
+        //       backgroundColor: Theme.of(context).errorColor,
+        //     ),
+        //   );
+        //   return;
       }
       if (isValid) {
         _formKey.currentState?.save();
@@ -81,6 +85,8 @@ class _AuthFormState extends State<AuthForm> {
           _userPassword.trim(),
           _userImageFile,
           _isSignUp,
+          _isDefaultImage,
+
           context,
         );
       }

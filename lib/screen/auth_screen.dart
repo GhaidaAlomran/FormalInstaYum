@@ -23,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String password,
     File image,
     bool isSignUp,
+    bool isDefaultImage,
     BuildContext ctx,
     // we recevice the context of form Scafflod to have the ability to push the snakcbar messages and to use theme color.
   ) async {
@@ -36,15 +37,23 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
-        final ref = FirebaseStorage.instance.ref().child("user_image").child(
-            authResult.user.uid +
-                "jpg"); //we put the user is + jpg to be the name of the image and to make it unqie we use user id
 
-        // we add onComplete to can add await
-        await ref.putFile(image);
+        var url = ""; // NEW
+        if (isDefaultImage) {
+          url =
+              "noImage"; // to put the url part in the database with "noImage" if user does not choose an image
+        } else {
+          // to put the url part in database with user's image url
+          // NEW
+          final ref = FirebaseStorage.instance.ref().child("user_image").child(
+              authResult.user.uid +
+                  "jpg"); //we put the user is + jpg to be the name of the image and to make it unqie we use user id
 
-        final url = await ref.getDownloadURL();
+          // we add onComplete to can add await
+          await ref.putFile(image);
 
+          url = await ref.getDownloadURL();
+        }
         await FirebaseFirestore
             .instance //just to store the username in the database
             .collection("users")
@@ -70,7 +79,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (err.message != null) {
         message = err.message.toString();
-        message = "gggfb ";
+        message =
+            "error "; // ******************************************************************************************************************* change ggg to error
       }
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
