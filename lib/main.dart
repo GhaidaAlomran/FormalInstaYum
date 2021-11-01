@@ -1,22 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:instayum1/mainpages.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   //const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: "instaYum",
-//       debugShowCheckedModeBanner: false,
-//       home: MainPages(),
-//     );
-//   }
-// }
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instayum1/screen/auth_screen.dart';
